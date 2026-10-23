@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitio de ventas | Belladison Secrets</title>
+  <link rel="stylesheet" href="../estilos/ventas.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="inner-page">
+  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false"><img
+      src="../imagenes/flor-menu.jpeg" alt=""></button>
+  <div class="menu-overlay" id="menuOverlay"></div>
+  <aside class="side-menu" id="sideMenu" aria-label="Menú principal">
+    <div class="menu-brand"><img src="../imagenes/logo-belladison.jpeg" alt="">
+      <p>Belladison <em>Secrets</em></p>
+    </div>
+    <nav class="menu-links">
+      <a href="producto.html">Producto</a><a href="info-general.html">Info general</a><a href="equipo.html">Equipo de
+        trabajo</a>
+      <a href="ventas.html">Sitio de ventas</a><a href="fundamento-ambiental.html">Fundamento ambiental</a><a
+        href="ubicacion.html">Ubicación y contacto</a>
+    </nav>
+    <div class="menu-contact">
+      <h3>Contáctanos</h3>
+      <a href="tel:+50278822030">PBX +502 7882-2030</a><a href="https://wa.me/50278822030" target="_blank"
+        rel="noopener">WhatsApp +502 7882-2030</a>
+    </div>
+    <p class="menu-note">Belleza natural, cuidado consciente.</p>
+  </aside>
+  <main class="page-main">
+    <section class="page-heading">
+      <p class="eyebrow">Tienda</p>
+      <h1>Sitio de ventas</h1>
+      <p>Elige tu producto y envía tu pedido por WhatsApp.</p>
+    </section>
+    <section class="sales-grid" id="salesGrid"></section>
+    <section class="cart-summary" aria-live="polite">
+      <div class="cart-heading"><span class="cart-icon" aria-hidden="true">✿</span>
+        <div>
+          <p class="eyebrow">Tu pedido</p>
+          <h2>Resumen</h2>
+        </div>
+      </div>
+      <div class="cart-items" id="cartItems"></div>
+      <div class="cart-total-row"><span>Total</span><strong id="cartTotal">Q0.00</strong></div>
+      <a class="button button-dark cart-order" id="orderBtn" aria-disabled="true" target="_blank" rel="noopener">Enviar
+        pedido por WhatsApp</a>
+      <p class="cart-note">El pedido se confirma por WhatsApp con nuestro equipo.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><span>© <span class="current-year"></span> Belladison Secrets</span><a
+      href="../index.html">Volver al inicio ↗</a></footer>
+  <script src="../js/script.js"></script>
+  <script>
+    /* EDITAR: precios de ejemplo; pon los reales. Para agregar fotos, escribe la ruta en img (ej. ../imagenes/producto-grande.jpg). */
+    var PRODUCTS = [
+      { id: "pequeno", name: "Shampoo de Romero Natural", size: "Bote pequeño", desc: "Con romero, canela, clavo de olor y jengibre. Envase sostenible.", price: 25, img: "../imagenes/producto-detalle.jpg" },
+      { id: "mediano", name: "Shampoo de Romero Natural", size: "Bote mediano · 250 ml", desc: "Con romero, canela, clavo de olor y jengibre. Envase sostenible.", price: 45, img: "../imagenes/producto-principal.jpg" },
+      { id: "grande", name: "Shampoo de Romero Natural", size: "Bote grande · 500 ml", desc: "Con romero, canela, clavo de olor y jengibre. Envase sostenible.", price: 80, img: "" }
+    ];
+    var WA = "50278822030", cart = {};
+    function q(n) { return "Q" + n.toFixed(2) }
+    function render() {
+      var rows = "", total = 0, msg = [];
+      PRODUCTS.forEach(function (p) {
+        var c = cart[p.id] || 0; if (!c) return; total += c * p.price; msg.push(c + " x " + p.name + " (" + p.size + ")");
+        rows += '<div class="cart-row"><div><span class="cart-row-name">' + p.name + '</span><span class="cart-row-detail">' + c + " x " + q(p.price) + '</span></div><button class="button" data-less="' + p.id + '" aria-label="Quitar uno">−</button><span class="cart-row-price">' + q(c * p.price) + "</span></div>"
+      });
+      document.getElementById("cartItems").innerHTML = rows || '<p class="empty-cart">Aún no has agregado productos.</p>';
+      document.getElementById("cartTotal").textContent = q(total);
+      var b = document.getElementById("orderBtn"); b.setAttribute("aria-disabled", total ? "false" : "true");
+      b.href = total ? "https://wa.me/" + WA + "?text=" + encodeURIComponent("Hola, quiero hacer este pedido:\n" + msg.join("\n") + "\nTotal: " + q(total)) : "#";
+    }
+    document.getElementById("salesGrid").innerHTML = PRODUCTS.map(function (p) { return '<article class="sale-card"><div class="sale-image">' + (p.img ? '<img src="' + p.img + '" alt="' + p.name + ' ' + p.size + '">' : '<div class="image-placeholder" style="display:grid">Foto del ' + p.size.split(" ·")[0].toLowerCase() + '</div>') + '</div><div class="sale-copy"><p class="product-kicker">' + p.size + '</p><h2>' + p.name + '</h2><p>' + p.desc + '</p><span class="sale-price">' + q(p.price) + '</span><button class="button button-dark add-product" data-add="' + p.id + '">Agregar al pedido</button></div></article>' }).join("");
+    document.addEventListener("click", function (e) {
+      var a = e.target.dataset.add, l = e.target.dataset.less;
+      if (a) { cart[a] = (cart[a] || 0) + 1; render() } if (l) { cart[l] = Math.max(0, (cart[l] || 0) - 1); render() }
+    });
+    render();
+  </script>
+</body>
+
+</html>

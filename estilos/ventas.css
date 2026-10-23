@@ -1,0 +1,215 @@
+/* ESTILOS DE LA TIENDA. Los colores generales se definen en principal.css. */
+@import url("principal.css");
+
+/* Tres productos alineados en escritorio. */
+.sales-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    align-items: start;
+}
+
+.sale-card {
+    border: 1px solid var(--line);
+    background: var(--paper);
+}
+
+.sale-image {
+    height: 380px;
+    overflow: hidden;
+    background: #e8e2d5;
+}
+
+.sale-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .4s;
+}
+
+.sale-card:hover .sale-image img {
+    transform: scale(1.05);
+}
+
+.sale-image .image-placeholder {
+    height: 100%;
+}
+
+.sale-copy {
+    padding: 23px;
+}
+
+.product-kicker {
+    margin-bottom: 8px;
+    color: var(--olive);
+    font-size: 9px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.sale-copy h2 {
+    margin-bottom: 12px;
+    font-size: 30px;
+}
+
+.sale-copy>p:not(.product-kicker) {
+    min-height: 62px;
+    font-size: 11px;
+    line-height: 1.9;
+}
+
+.sale-price {
+    display: block;
+    margin: 18px 0;
+    color: var(--ink);
+    font: 600 25px var(--font-title);
+}
+
+.add-product {
+    width: 100%;
+}
+
+.add-product.added {
+    background: var(--olive-dark);
+    color: white;
+}
+
+/* RESUMEN: cantidades por producto, precio unitario y total. */
+.cart-summary {
+    width: min(100%, 720px);
+    margin: 60px 0 0 auto;
+    padding: 30px;
+    border: 1px solid var(--line);
+    background: rgba(255, 253, 248, .8);
+}
+
+.cart-heading {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+}
+
+.cart-heading h2 {
+    margin: 0;
+    font-size: 35px;
+}
+
+.cart-heading .eyebrow {
+    margin-bottom: 4px;
+}
+
+.cart-icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--olive);
+    font-size: 24px;
+}
+
+.cart-items {
+    padding: 12px 0;
+}
+
+.empty-cart {
+    margin: 15px 0;
+    font-size: 12px;
+}
+
+.cart-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 18px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #e9e3d8;
+    font-size: 11px;
+}
+
+.cart-row-name {
+    color: var(--ink);
+}
+
+.cart-row-detail {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.cart-row-price {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
+
+.cart-total-row strong {
+    color: var(--ink);
+    font: 600 32px var(--font-title);
+    letter-spacing: 0;
+}
+
+.cart-note {
+    margin: 16px 0 0;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+    .sales-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .sale-image {
+        height: 230px;
+    }
+}
+
+@media (max-width: 600px) {
+    .sales-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sale-image {
+        height: 290px;
+    }
+
+    .cart-summary {
+        padding: 20px;
+        margin-top: 35px;
+    }
+
+    .cart-row {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .cart-row-price {
+        grid-column: 2;
+    }
+}
+
+body {
+    background-image: url("../imagenes/fondo.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+/* Botón de pedido por WhatsApp */
+.cart-order{margin-top:18px;width:100%;text-align:center}
+.cart-order[aria-disabled="true"]{opacity:.45;pointer-events:none}
+
+/* Muestra la foto completa del bote, sin recortar la etiqueta */
+.sale-image{height:auto!important;aspect-ratio:1064/1478}
